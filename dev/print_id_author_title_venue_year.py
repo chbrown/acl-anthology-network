@@ -1,8 +1,26 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import sys
 import re
 from itertools import groupby
+# easy_install -U 'ftfy<5'
 from ftfy import fix_text
+from ftfy.fixes import htmlentitydefs
+
+nonstandard_entities = [
+    ('ccaron', u'č'),
+    ('Ccaron', u'Č'),
+    ('cacute', u'ć'),
+    ('Sacute', u'Ś'),
+    ('Scedil', u'Ş'),
+    ('nacute', u'ń'),
+    ('ncaron', u'ň'),
+    ('scedil', u'ş'),
+    ('slig', u'ß'),
+    ('zcaron', u'ž'),
+]
+for name, unicode_value in nonstandard_entities:
+    htmlentitydefs.name2codepoint[name] = ord(unicode_value)
 
 def _id_field_iter(text):
     current_id = None

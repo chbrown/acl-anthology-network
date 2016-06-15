@@ -24,6 +24,7 @@ out/citingId_citedId.tsv: aan/release/2013/acl.txt
 out/id_author_title_venue_year.tsv: aan/release/2013/acl-metadata.txt
 	# acl-metadata.txt provides some nice metadata, but with an atrocious hodgepodge of encodings.
 	# it uses html entities for some non-ASCII characters, and ISO-8859-2 for others,
+	# and even some html entity references that aren't html-spec compliant
 	# and not only does it use html entities to encode accents, it uses them to encode broken 'mojibaked' accents
 	# ftfy from https://github.com/LuminosoInsight/python-ftfy is brilliant.
 	# otherwise, the format is pretty straightforward, though some of the key-val pairs span multiple lines
