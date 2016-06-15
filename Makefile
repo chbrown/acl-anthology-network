@@ -18,6 +18,8 @@ out/id_text.tsv: aan/papers_text
 
 out/citingId_citedId.tsv: aan/release/2013/acl.txt
 	# acl.txt uses ' ==> ' to separate the two IDs, which seems arbitrary
+	# the first item generally has a more recent year than the second, so we
+	# know the "left ==> right" notation means "citing ==> cited"
 	# otherwise it's just ASCII, so that's nice
 	<$< awk -F ' ==> ' '{print $$1"\t"$$2}' >$@
 
