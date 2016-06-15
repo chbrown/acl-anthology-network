@@ -1,9 +1,10 @@
 all: out/id_text.tsv out/citingId_citedId.tsv out/id_author_title_venue_year.tsv
 
 aanrelease2013.tar.gz:
+	# aanrelease2013.tar.gz is 292 MB, md5: 7d10b490e75b8a22b673173e10fbcc18
 	curl -s http://clair.eecs.umich.edu/aan/downloads/aanrelease2013.tar.gz >$@
 
-aan aan/papers_text aan/release/2013/acl.txt: | aanrelease2013.tar.gz
+aan aan/papers_text aan/release/2013/acl.txt aan/release/2013/acl-metadata.txt: | aanrelease2013.tar.gz
 	# extract the original tarball, which contains a single directory, aan/
 	tar -xzf aanrelease2013.tar.gz
 
