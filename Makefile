@@ -14,7 +14,7 @@ out/id_text.tsv: aan/papers_text
 	# - totally empty papers can cause problems later on (e.g., P02-1046.txt)
 	# - there are a lot of other files besides paper texts (e.g., W12-3714.body, collaboration_network.txt)
 	# - the content is all over the place, weird whitespace, weird characters
-	find $< -name '???-????.txt' -size +1 | xargs -n 1 dev/print_id_text.sh >$@
+	find $< -name '???-????.txt' -size +1 | xargs -n 1 ./print_id_text.sh >$@
 
 out/citingId_citedId.tsv: aan/release/2013/acl.txt
 	# acl.txt uses ' ==> ' to separate the two IDs, which seems arbitrary
@@ -30,4 +30,4 @@ out/id_author_title_venue_year.tsv: aan/release/2013/acl-metadata.txt
 	# and not only does it use html entities to encode accents, it uses them to encode broken 'mojibaked' accents
 	# ftfy from https://github.com/LuminosoInsight/python-ftfy is brilliant.
 	# otherwise, the format is pretty straightforward, though some of the key-val pairs span multiple lines
-	<$< dev/print_id_author_title_venue_year.py >$@
+	<$< ./print_id_author_title_venue_year.py >$@
