@@ -41,6 +41,7 @@ Different sources in the dataset contain different subsets of the data; for exam
 <!-- # setup:
 awk -F ' ==> ' '{print $1}' acl.txt | sort > citing.txt
 awk -F ' ==> ' '{print $2}' acl.txt | sort > cited.txt
+awk -F $'\t' '{print $2}' out/id_author_title_venue_year.tsv | sed $'s/; */\\\n/g' > out/authors.txt
 -->
 
 | Measure                                    |   Value |
@@ -52,10 +53,12 @@ awk -F ' ==> ' '{print $2}' acl.txt | sort > cited.txt
 | avg. citing per cited                      |  8.6394 | <!-- 110930 / 12840 -->
 | unique papers                              |  18,160 | <!-- sort citing.txt cited.txt | uniq | wc -l -->
 | unique papers that both cite and are cited |  11,234 | <!-- comm -1 -2 <(uniq citing.txt) <(uniq cited.txt) | wc -l -->
+| unique author names                        |  16,786 | <!-- sort out/authors.txt | uniq | wc -l -->
+
 
 | Top 10 most-cited papers | # of papers citing | authors         | title |
 |-------------------------:|-------------------:|:----------------|:------|
-|                 J93-2004 |                928 | Mitchell et al. | Building A Large Annotated Corpus Of English: The Penn Treebank Computational Linguistics |
+|                 J93-2004 |                928 | Mitchell et al. | Building A Large Annotated Corpus Of English: The Penn Treebank Computational Linguistics | <!-- sort cited.txt | uniq -c | sort -g | tail -10r -->
 |                 P02-1040 |                891 | Papineni et al. | Bleu: A Method For Automatic Evaluation Of Machine Translation |
 |                 J93-2003 |                729 | Brown et al.    | The Mathematics Of Statistical Machine Translation: Parameter Estimation |
 |                 P03-1021 |                667 | Och & Josef     | Minimum Error Rate Training In Statistical Machine Translation |
@@ -65,12 +68,11 @@ awk -F ' ==> ' '{print $2}' acl.txt | sort > cited.txt
 |                 P03-1054 |                394 | Klein & Manning | Accurate Unlexicalized Parsing |
 |                 J96-1002 |                376 | Berger et al.   | A Maximum Entropy Approach To Natural Language Processing |
 |                 A00-2018 |                371 | Charniak        | A Maximum-Entropy-Inspired Parser |
-<!-- sort cited.txt | uniq -c | sort -g | tail -10r -->
 
 
 | Top 10 most-citing papers | # of papers cited |
 |--------------------------:|------------------:|
-|                  P10-1142 |                88 |
+|                  P10-1142 |                88 | <!-- sort citing.txt | uniq -c | sort -g | tail -10r -->
 |                  J10-3003 |                80 |
 |                  W13-4917 |                71 |
 |                  W13-2201 |                65 |
@@ -80,7 +82,6 @@ awk -F ' ==> ' '{print $2}' acl.txt | sort > cited.txt
 |                  J07-4004 |                57 |
 |                  J11-2002 |                52 |
 |                  D11-1108 |                52 |
-<!-- sort citing.txt | uniq -c | sort -g | tail -10r -->
 
 
 ### `aan/release/2013/acl-metadata.txt`
