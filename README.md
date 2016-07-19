@@ -23,6 +23,7 @@ To run, call `make` in the root directory.
 
 The [University of Michigan](http://umich.edu/) [CLAIR Group](http://clair.si.umich.edu/clair/homepage/)'s [ACL Anthology Network interface](http://clair.eecs.umich.edu/aan/index.php) reports the following statistics:
 
+| Measure                         |   Value |
 |:--------------------------------|--------:|
 | Number of papers                |  21,212 |
 | Number of authors               |  17,792 |
@@ -42,6 +43,7 @@ awk -F ' ==> ' '{print $1}' acl.txt | sort > citing.txt
 awk -F ' ==> ' '{print $2}' acl.txt | sort > cited.txt
 -->
 
+| Measure                                    |   Value |
 |:-------------------------------------------|--------:|
 | citing→cited relationships                 | 110,930 | <!-- wc -l acl.txt -->
 | unique citing papers                       |  16,554 | <!-- uniq citing.txt | wc -l -->
@@ -51,20 +53,22 @@ awk -F ' ==> ' '{print $2}' acl.txt | sort > cited.txt
 | unique papers                              |  18,160 | <!-- sort citing.txt cited.txt | uniq | wc -l -->
 | unique papers that both cite and are cited |  11,234 | <!-- comm -1 -2 <(uniq citing.txt) <(uniq cited.txt) | wc -l -->
 
-| top 10 most-cited papers | # of papers citing | <!-- sort cited.txt | uniq -c | sort -g | tail -10r -->
-|-------------------------:|-------------------:|
-|                 J93-2004 |                928 |
-|                 P02-1040 |                891 |
-|                 J93-2003 |                729 |
-|                 P03-1021 |                667 |
-|                 J03-1002 |                656 |
-|                 P07-2045 |                591 |
-|                 N03-1017 |                556 |
-|                 P03-1054 |                394 |
-|                 J96-1002 |                376 |
-|                 A00-2018 |                371 |
+| Top 10 most-cited papers | # of papers citing | authors         | title |
+|-------------------------:|-------------------:|:----------------|:------|
+|                 J93-2004 |                928 | Mitchell et al. | Building A Large Annotated Corpus Of English: The Penn Treebank Computational Linguistics |
+|                 P02-1040 |                891 | Papineni et al. | Bleu: A Method For Automatic Evaluation Of Machine Translation |
+|                 J93-2003 |                729 | Brown et al.    | The Mathematics Of Statistical Machine Translation: Parameter Estimation |
+|                 P03-1021 |                667 | Och & Josef     | Minimum Error Rate Training In Statistical Machine Translation |
+|                 J03-1002 |                656 | Och & Josef     | A Systematic Comparison Of Various Statistical Alignment Models |
+|                 P07-2045 |                591 | Koehn et al.    | Moses: Open Source Toolkit for Statistical Machine Translation |
+|                 N03-1017 |                556 | Koehn et al.    | Statistical Phrase-Based Translation |
+|                 P03-1054 |                394 | Klein & Manning | Accurate Unlexicalized Parsing |
+|                 J96-1002 |                376 | Berger et al.   | A Maximum Entropy Approach To Natural Language Processing |
+|                 A00-2018 |                371 | Charniak        | A Maximum-Entropy-Inspired Parser |
+<!-- sort cited.txt | uniq -c | sort -g | tail -10r -->
 
-| top 10 most-citing papers | # of papers cited | <!-- sort citing.txt | uniq -c | sort -g | tail -10r -->
+
+| Top 10 most-citing papers | # of papers cited |
 |--------------------------:|------------------:|
 |                  P10-1142 |                88 |
 |                  J10-3003 |                80 |
@@ -76,6 +80,7 @@ awk -F ' ==> ' '{print $2}' acl.txt | sort > cited.txt
 |                  J07-4004 |                57 |
 |                  J11-2002 |                52 |
 |                  D11-1108 |                52 |
+<!-- sort citing.txt | uniq -c | sort -g | tail -10r -->
 
 
 ### `aan/release/2013/acl-metadata.txt`
