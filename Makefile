@@ -8,6 +8,13 @@ aan aan/papers_text aan/release/2013/acl.txt aan/release/2013/acl-metadata.txt: 
 	# extract the original tarball, which contains a single directory, aan/
 	tar -xzf aanrelease2013.tar.gz
 
+# alternative to out/id_text.tsv, this cleans up the text in the same way
+# but produces an output file for each input file
+# find aan/papers_text -name '???-????.txt' -size +1 | sed s%aan/papers_text%out/txt% | xargs make
+out/txt/%: aan/papers_text/%
+	@mkdir -p $(@D)
+	<$< tr -Cs "[:alnum:]\037" ' ' | tr -s "[:space:]" ' ' >$@
+
 out/id_text.tsv: aan/papers_text
 	# flatten all non-empty papers in papers_text/ and concatenate into single file
 	# issues:
