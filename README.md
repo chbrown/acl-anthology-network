@@ -41,7 +41,6 @@ Different sources in the dataset contain different subsets of the data; for exam
 <!-- # setup:
 awk -F ' ==> ' '{print $1}' acl.txt | sort > citing.txt
 awk -F ' ==> ' '{print $2}' acl.txt | sort > cited.txt
-awk -F $'\t' '{print $2}' out/id_author_title_venue_year.tsv | sed $'s/; */\\\n/g' > out/authors.txt
 -->
 
 | Measure                                    |   Value |
@@ -53,7 +52,6 @@ awk -F $'\t' '{print $2}' out/id_author_title_venue_year.tsv | sed $'s/; */\\\n/
 | avg. citing per cited                      |  8.6394 | <!-- 110930 / 12840 -->
 | unique papers                              |  18,160 | <!-- sort citing.txt cited.txt | uniq | wc -l -->
 | unique papers that both cite and are cited |  11,234 | <!-- comm -1 -2 <(uniq citing.txt) <(uniq cited.txt) | wc -l -->
-| unique author names                        |  16,786 | <!-- sort out/authors.txt | uniq | wc -l -->
 
 
 | Top 10 most-cited papers | # of papers citing | authors         | title |
@@ -88,10 +86,17 @@ awk -F $'\t' '{print $2}' out/id_author_title_venue_year.tsv | sed $'s/; */\\\n/
 
 The formatting of this file is, frankly, befuddling. The general structure is BibTeX-esque, but no BibTeX parser could possibly handle it. Worse, the mixture of encodings is insane! If [`ftfy`](https://github.com/LuminosoInsight/python-ftfy) was ever looking for a great real-world case study, this would be it.
 
+<!-- # setup:
+awk -F $'\t' '{print $2}' out/id_author_title_venue_year.tsv | sed $'s/; */\\\n/g' > out/authors.txt
+-->
+
 <!-- echo $'id\tauthor\ttitle\tvenue\tyear' | cat - out/id_author_title_venue_year.tsv | synopsize -->
+
+<!-- A `~` before a number indicates an estimate, resulting from approximations due to limitations in the data. -->
 
 * There are 20,989 papers.
 * There is 1 missing `author`, `W10-4238`, and 16,308 unique `author` sequences (`author` lists all authors for that paper).
+* There are ~16,786 unique author names (approximate due to inconsistencies in both the character encoding and the metadata's representation of the names). <!-- sort out/authors.txt | uniq | wc -l -->
 * There are 12 missing venues, and 494 unique venue values.
 * The year field ranges from 1965 to 2013, with 41 unique values (there are some gaps prior to 1978).
 * There are 18,152 papers (all but 8) in the citation network that have an entry in this metadata file
@@ -102,7 +107,7 @@ The formatting of this file is, frankly, befuddling. The general structure is Bi
 
 There are a lot of other files in this directory; some of the papers are segmented into body and references sections; there are some files that seem like they were intended to go in `aan/release/2013/`; and many of the files that match this pattern are empty.
 
-* There are 20,194 files that match that pattern and are non-empty.
+* There are 20,194 files that match this pattern and are non-empty.
 * There are 17,593 papers in the citation network that have a corresponding file in `papers_text/`.
 * Of the 110,930 total edges in the citation network, 107,873 have corresponding files in `papers_text/`.
 
