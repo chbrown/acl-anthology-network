@@ -7,10 +7,11 @@
 3. It's unclear which files are the raw data and which are statistics derived from those data.
 4. Files that look like they should be the outputs of scripts are actually the help messages of those scripts.
 5. Many of the `papers_text/` files (plain text extracted from the PDF) have issues:
-  * Some are gibberish due to non-compliant PDF encoding (e.g., `P00-1032`, `W06-3709`)
-  * Others are gibberish to varying degrees, due to bad OCR in the original PDF (from problematic, e.g., `T75-2033`, to unusable, e.g., `J79-1013`)
-  * Others are not in English (e.g., `C73-2029`)
-  * Others contain the text of a completely different paper (e.g., `L08-1302`)
+   * Some are gibberish due to non-compliant PDF encoding (e.g., `P00-1032`, `W06-3709`)
+   * Others are gibberish to varying degrees, due to bad OCR in the original PDF
+     (from problematic, e.g., `T75-2033`, to unusable, e.g., ` J79-1013`)
+   * Others are not in English (e.g., `C73-2029`)
+   * Others contain the text of a completely different paper (e.g., `L08-1302`)
 
 `Makefile` declaratively provides some documentation of the issues and the cleanup work involved.
 
@@ -21,7 +22,8 @@ To run, call `make` in the root directory.
 
 ## Summary statistics
 
-The [University of Michigan](http://umich.edu/) [CLAIR Group](http://clair.si.umich.edu/clair/homepage/)'s [ACL Anthology Network interface](http://clair.eecs.umich.edu/aan/index.php) reports the following statistics:
+The [University of Michigan](http://umich.edu/) [CLAIR Group](http://clair.si.umich.edu/clair/homepage/)'s
+[ACL Anthology Network interface](http://clair.eecs.umich.edu/aan/index.php) reports the following statistics:
 
 | Measure                         |   Value |
 |:--------------------------------|--------:|
@@ -34,7 +36,8 @@ The [University of Michigan](http://umich.edu/) [CLAIR Group](http://clair.si.um
 | Collaboration network diameter  |      15 |
 
 Some of these are inaccurate, or describe only one of the data sources.
-Different sources in the dataset contain different subsets of the data; for example, citations are reported for some papers that do not have a corresponding `papers_text/` file (e.g., `L08-1098`).
+Different sources in the dataset contain different subsets of the data;
+for example, citations are reported for some papers that do not have a corresponding `papers_text/` file (e.g., `L08-1098`).
 
 ### `aan/release/2013/acl.txt`
 
@@ -84,7 +87,10 @@ awk -F ' ==> ' '{print $2}' acl.txt | sort > cited.txt
 
 ### `aan/release/2013/acl-metadata.txt`
 
-The formatting of this file is, frankly, befuddling. The general structure is BibTeX-esque, but no BibTeX parser could possibly handle it. Worse, the mixture of encodings is insane! If [`ftfy`](https://github.com/LuminosoInsight/python-ftfy) was ever looking for a great real-world case study, this would be it.
+The formatting of this file is, frankly, befuddling.
+The general structure is BibTeX-esque, but no BibTeX parser could possibly handle it.
+Worse, the mixture of encodings is insane!
+If [`ftfy`](https://github.com/LuminosoInsight/python-ftfy) was ever looking for a great real-world case study, this would be it.
 
 <!-- # setup:
 awk -F $'\t' '{print $2}' out/id_author_title_venue_year.tsv | sed $'s/; */\\\n/g' > out/authors.txt
@@ -92,11 +98,9 @@ awk -F $'\t' '{print $2}' out/id_author_title_venue_year.tsv | sed $'s/; */\\\n/
 
 <!-- echo $'id\tauthor\ttitle\tvenue\tyear' | cat - out/id_author_title_venue_year.tsv | synopsize -->
 
-<!-- A `~` before a number indicates an estimate, resulting from approximations due to limitations in the data. -->
-
 * There are 20,989 papers.
 * There is 1 missing `author`, `W10-4238`, and 16,308 unique `author` sequences (`author` lists all authors for that paper).
-* There are ~16,786 unique author names (approximate due to inconsistencies in both the character encoding and the metadata's representation of the names). <!-- sort out/authors.txt | uniq | wc -l -->
+* There are around 16,786 unique author names (approximate due to inconsistencies in both the character encoding and the metadata's representation of the names). <!-- sort out/authors.txt | uniq | wc -l -->
 * There are 12 missing venues, and 494 unique venue values.
 * The year field ranges from 1965 to 2013, with 41 unique values (there are some gaps prior to 1978).
 * There are 18,152 papers (all but 8) in the citation network that have an entry in this metadata file
@@ -105,7 +109,10 @@ awk -F $'\t' '{print $2}' out/id_author_title_venue_year.tsv | sed $'s/; */\\\n/
 
 ### `aan/papers_text/???-????.txt`
 
-There are a lot of other files in this directory; some of the papers are segmented into body and references sections; there are some files that seem like they were intended to go in `aan/release/2013/`; and many of the files that match this pattern are empty.
+There are a lot of other files in this directory;
+some of the papers are segmented into body and references sections;
+there are some files that seem like they were intended to go in `aan/release/2013/`;
+and many of the files that match this pattern are empty.
 
 * There are 20,194 files that match this pattern and are non-empty.
 * There are 17,593 papers in the citation network that have a corresponding file in `papers_text/`.
@@ -117,9 +124,12 @@ There are a lot of other files in this directory; some of the papers are segment
 Despite these flaws, the ACL Anthology Network is a great resource;
 many thanks to the [many contributors](http://clair.eecs.umich.edu/aan/about.php).
 
-> Dragomir R. Radev, Pradeep Muthukrishnan, Vahed Qazvinian, Amjad Abu-Jbara. 2013. The ACL Anthology Network Corpus. Language Resources and Evaluation 47 (4), pp. 919–944. [10.1007/s10579-012-9211-2](http://dx.doi.org/10.1007/s10579-012-9211-2).
+> Dragomir R. Radev, Pradeep Muthukrishnan, Vahed Qazvinian, Amjad Abu-Jbara. 2013.
+> The ACL Anthology Network Corpus. Language Resources and Evaluation 47 (4), pp. 919–944.
+> [10.1007/s10579-012-9211-2](http://dx.doi.org/10.1007/s10579-012-9211-2).
 
 
 ## License
 
-Copyright 2016 Christopher Brown. [MIT Licensed](http://chbrown.github.io/licenses/MIT/#2016).
+Copyright 2016–2018 Christopher Brown.
+[MIT Licensed](https://chbrown.github.io/licenses/MIT/#2016-2018).
